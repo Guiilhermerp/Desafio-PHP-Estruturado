@@ -21,10 +21,15 @@ function checarNome($str)
 function pegaProduto(){
     $produtosJson = file_get_contents('./database/produtos.json');
     $produtosArray = json_decode($produtosJson, true);
+
+    return $produtosArray;
 }
 
 // CRIANDO NOVO PRODUTO
 function novoProduto($nome, $preco, $descricao){
+
+    pegaProduto();
+
     $novoProduto = [
         'nome' => $nome,
         'preco' => $preco,
@@ -33,19 +38,18 @@ function novoProduto($nome, $preco, $descricao){
 
     //atribuindo novo produto a array produtos;
     $produtosArray[] = $novoProduto;
-}
 
-// GUARDANDO produtoArray NO JSON
-function guardaProduto(){
+    // GUARDANDO produtoArray NO JSON
     $novoProdutoJson = json_encode($produtosArray);
     $cadastrou = file_put_contents('./database/produtos.json', $novoProdutoJson);
+
+    // VERIFICA SE CADASTROU
+    if ($cadastrou) {
+        header('Location: indexProdutos.php');
+     }
 }
 
-// VERIFICA SE CADASTROU
-function cadastrou(){
-    if ($cadastrou) {
-       echo("CADASTROU !!");
-    }
-        echo("NÃO CADASTROU !! ");
-}
+
+
+
 ?>

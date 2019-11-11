@@ -5,8 +5,7 @@ include 'validacoes.php';
 // Definindo valores padroes
 $ok_nome = true;
 $nome = '';
-$preco = 0;
-$descricao = '';
+
 
 
 // Verificando se o formulário foi enviado
@@ -15,10 +14,7 @@ if ($_POST) {
     // Validando se o nome foi digitado
     $ok_nome = checarNome($_POST['nome']);
 
-	pegaProduto();
 	novoProduto($_POST['nome'], $_POST['preco'], $_POST['descricao']);
-	guardaProduto();
-	cadastrou();
 }
 
 ?>
@@ -29,7 +25,7 @@ if ($_POST) {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=form, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Cadastra Produto</title>
     
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
