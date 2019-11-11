@@ -8,39 +8,17 @@ $nome = '';
 $preco = 0;
 $descricao = '';
 
+
 // Verificando se o formulário foi enviado
 if ($_POST) {
 
     // Validando se o nome foi digitado
     $ok_nome = checarNome($_POST['nome']);
 
-    // Atribuindo o valor dos $_POST as variaveis
-	$nome = $_POST['nome'];
-	$preco = $_POST['$preco'];
-	$descricao = $_POST['$descricao'];
-	
-	// PEGANDO produtos.json E TRANSFORMANDO EM ARRAY
-    $produtosJson = file_get_contents('./database/produtos.json');
-    $produtosArray = json_decode($produtosJson, true);
-	
-	// CRIANDO NOVO PRODUTO
-    $novoProduto = [
-        'nome' => $nome,
-        'preco' => $preco,
-        'descricao' => $descricao,
-    ];
-
-    //atribuindo novo produto a array produtos;
-    $produtosArray[] = $novoProduto;
-
-	// GUARDANDO produtoArray NO JSON
-    $novoProdutoJson = json_encode($produtosArray);
-    $cadastrou = file_put_contents('./database/produtos.json', $novoProdutoJson);
-
-	// pegaProduto();
-	// novoProduto($nome, $preco, $descricao);
-	// guardaProduto();
-	// cadastrou();
+	pegaProduto();
+	novoProduto($_POST['nome'], $_POST['preco'], $_POST['descricao']);
+	guardaProduto();
+	cadastrou();
 }
 
 ?>
@@ -73,7 +51,7 @@ if ($_POST) {
 			<input class="form-control" type="text" id="descricao" name="descricao">
 
 			<input type="file" name="foto">
-			<button type="submit">Enviar</button>
+			<button type="submit" value="Submit" name="submit">Enviar</button>
     	</div>
 
 	</form>

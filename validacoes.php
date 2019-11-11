@@ -26,9 +26,9 @@ function pegaProduto(){
 // CRIANDO NOVO PRODUTO
 function novoProduto($nome, $preco, $descricao){
     $novoProduto = [
-        'nome' => $_POST['$nome'],
-        'preco' => $_POST['$preco'],
-        'descricao' => $_POST['$descricao'],
+        'nome' => $nome,
+        'preco' => $preco,
+        'descricao' => $descricao,
     ];
 
     //atribuindo novo produto a array produtos;
