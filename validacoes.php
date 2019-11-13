@@ -19,16 +19,15 @@ function checarNome($str)
 
 // PEGANDO produtos.json E TRANSFORMANDO EM ARRAY
 function pegaProduto(){
-    $produtosJson = file_get_contents('./database/produtos.json');
-    $produtosArray = json_decode($produtosJson, true);
+    
 
-    return $produtosArray;
+    
 }
 
 // CRIANDO NOVO PRODUTO
 function novoProduto($nome, $preco, $descricao){
-
-    pegaProduto();
+    $produtosJson = file_get_contents('./database/produtos.json');
+    $produtosArray = json_decode($produtosJson, true);
 
     $novoProduto = [
         'nome' => $nome,
@@ -47,6 +46,17 @@ function novoProduto($nome, $preco, $descricao){
     if ($cadastrou) {
         header('Location: indexProdutos.php');
      }
+}
+
+function criaFoto(){
+    if ($_FILES['foto']['error'] == 0) {
+        $nomeFoto = $_FILES['foto']['name'];
+        $caminhoTmp = $_FILES['foto']['tmp_name'];
+        move_uploaded_file(
+            $caminhoTmp, 
+            './assets/img/' . $nomeFoto
+        );
+    }
 }
 
 

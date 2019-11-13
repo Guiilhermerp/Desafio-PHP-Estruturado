@@ -11,10 +11,12 @@ $nome = '';
 // Verificando se o formulário foi enviado
 if ($_POST) {
 
+
     // Validando se o nome foi digitado
     $ok_nome = checarNome($_POST['nome']);
 
 	novoProduto($_POST['nome'], $_POST['preco'], $_POST['descricao']);
+	criaFoto();
 }
 
 ?>
