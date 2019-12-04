@@ -1,0 +1,20 @@
+[
+    {
+        "nome": "user",
+        "email": "user@mail.com",
+        "senha": "$2y$10$1QCx8VHTfRnu5.4DNjVhx.aJ6sZITJSjYfJ2AZUA2OM8zIVLcXH2S",
+        "id": 1
+    },
+    {
+        "nome": "User 2 ",
+        "email": "user2@mail.com",
+        "senha": "$2y$10$sGj62n\/UJXZEgzN3BDdYEOHGrdUzbGqvZDvJdw.Iy94JF6xsd4dhq",
+        "id": 2
+    },
+    {
+        "nome": "asda",
+        "email": "asdsad@mail.com",
+        "senha": "$2y$10$pfRB8yQ4IQ7wLas0MSd4XuuKAyNh6Ql8L557RPSAB5WAnL5KI1Ik2",
+        "id": 3
+    }
+]

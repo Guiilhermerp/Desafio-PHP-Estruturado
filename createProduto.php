@@ -1,6 +1,6 @@
 <?php
 // Includes
-include 'validacoes.php';
+include 'funcoes.php';
 
 // Definindo valores padroes
 $ok_nome = true;
@@ -15,7 +15,7 @@ if ($_POST) {
     // Validando se o nome foi digitado
     $ok_nome = checarNome($_POST['nome']);
 
-	novoProduto($_POST['nome'], $_POST['preco'], $_POST['descricao']);
+	novoProduto($nome, $preco, $descricao);
 	criaFoto();
 }
 
@@ -36,7 +36,7 @@ if ($_POST) {
 
 		<div class="col-md-6 mb-3">
       		<label for="nome">Nome</label>
-      		<input name="nome" type="text" id="nome" value="<?= $nome?>" class="form-control <?php if (!$ok_nome) {echo ('is-invalid');}?>" placeholder="Nome"> 
+      		<input required name="nome" type="text" id="nome" value="<?= $nome?>" class="form-control <?php if (!$ok_nome) {echo ('is-invalid');}?>" placeholder="Nome"> 
 			<?php if (!$ok_nome): ?> 
 	  		<div class="invalid-feedback">
         		Nome inválido.
@@ -48,7 +48,7 @@ if ($_POST) {
 			<label  for="descricao">Descrição</label>
 			<input class="form-control" type="text" id="descricao" name="descricao">
 
-			<input type="file" name="foto">
+			<input required type="file" name="foto">
 			<button type="submit" value="Submit" name="submit">Enviar</button>
     	</div>
 
