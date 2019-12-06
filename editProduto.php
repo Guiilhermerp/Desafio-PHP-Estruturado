@@ -4,66 +4,67 @@ include('./includes/headerLogado.php');
 
 session_start();
 if (!$_SESSION['usuario']) header('Location: login.php');
-$erro_numero = false;
-$erro_nome = false;
-$erro_foto = false;
-if($_POST){
-    
-    if(!is_numeric($_POST['preco'])){
-        $erro_numero = true;
-    };
-    
-    if($_POST['nome']){
-        $erro_nome = false;
-    } else {
-        $erro_nome = true;
-    };
-    
-    if($_FILES['foto']['name']){
-        $erro_foto = false;
-    } else {
-        $erro_foto = true;
-    };
-    
-    if($_FILES['foto']['error']==0){
-        $nomeFoto = $_FILES['foto']['name'];
-        $tmpFoto = $_FILES['foto']['tmp_name'];
-        $urlFoto = './fotos_produtos/' . $nomeFoto;
-        
-        
-        move_uploaded_file($tmpFoto, $urlFoto);
-    };
-    
-    function pegaProdutos(){
-        $produtoJson = file_get_contents('./database/produtos.json');
-        return json_decode($produtoJson, true);
-    };
-    
-    $novoProduto = ['nome' => $_POST['nome'], 'descricao' => $_POST['descricao'], 'preco' => $_POST['preco'], 'foto' => $urlFoto];
-    
-    function guardaProdutos($novoProduto){
-        $arrayProdutos = pegaProdutos();
-        
-        if (empty($arrayProdutos)) {
-            $novoProduto['id'] = 1;
-        } else {
-            $novoProduto['id'] = ++end($arrayProdutos)['id'];    
-        }
-        
-        array_push($arrayProdutos, $novoProduto);
-        $novoProdutoJson = json_encode($arrayProdutos);
-        
-        return file_put_contents('./database/produtos.json', $novoProdutoJson);
-    };
-    
-    if(guardaProdutos($novoProduto)){
-        if(empty($erro_foto) && empty($erro_nome) && empty($erro_numero)){
-            return header('Location: indexProdutos.php');}
-    };
-    
-};
-?>
+    $erro_numero = false;
+    $erro_nome = false;
+    $erro_foto = false;
+    if($_POST){
 
+        if(!is_numeric($_POST['preco'])){
+           $erro_numero = true;
+        };
+
+        if($_POST['nome']){
+            $erro_nome = false;
+        } else {
+            $erro_nome = true;
+        };
+
+        if($_FILES['foto']['name']){
+            $erro_foto = false;
+        } else {
+            $erro_foto = true;
+        };
+
+        if($_FILES['foto']['error']==0){
+            $nomeFoto = $_FILES['foto']['name'];
+            $tmpFoto = $_FILES['foto']['tmp_name'];
+            $urlFoto = './fotos_produtos/' . $nomeFoto;
+            
+            move_uploaded_file($tmpFoto, $urlFoto);
+        };
+
+        function pegaProdutos(){
+            $produtoJson = file_get_contents('./database/produtos.json');
+            return json_decode($produtoJson, true);
+        };
+
+        $novoProduto = [
+            'id' => $_POST['id'],
+            'nome' => $_POST['nome'],
+            'preco' => $_POST['preco'],
+            'descricao' => $_POST['descricao'],
+            'foto' => $urlFoto
+          ];
+          
+        function editaProdutos($novoProduto) {
+            $produtos = pegaProdutos();
+            foreach($produtos as $index => $produto) {
+              if ($produto['id'] == $novoProduto['id']) {
+                $produtos[$index] = $novoProduto;
+            
+                $json_produtos = json_encode($produtos);
+                return file_put_contents('./database/produtos.json', $json_produtos);
+              }
+            }
+            return false;
+          }
+          
+      $editou = editaProdutos($novoProduto);
+      if ($editou){
+        header('Location: indexProdutos.php');
+      };
+    };
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,15 +73,16 @@ if($_POST){
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- inserindo o bootstrap -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Cadastro de produto</title>
+    <title>Editar produto</title>
 </head>
 <body>
-
-    <main class="container">
-        <div class="row my-4 offset-2">
-            <spam><h2>Cadastrar Produto</h2></spam>
+   
+    <div class="container">
+        <div class="my-4 offset-2">
+            <spam><h3>Editar produto</h3></spam>
         </div>
-            <form method="post" enctype="multipart/form-data">
+
+        <form method="post" enctype="multipart/form-data">
 
                 <div class="col-md-6 mt-2">
                     <label for="nome">Nome</label>
@@ -116,13 +118,17 @@ if($_POST){
                     </div>
                 </div>			
                 <div class="col-6">
-                    <button type="submit" class="btn btn-primary float-right w-15 mt-2">Enviar</button>
+                    <input type="hidden" name="id" value="<?= $_GET['id'] ?>">
+                    <button type="submit" class="btn btn-secondary  mt-2">Editar</button>
                 </div>
 
             </form>
         </main>
-        <script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>
+    
+    </div>
+
+    <script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous'></script>
-    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous'></script> 
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous'></script>
 </body>
 </html>
