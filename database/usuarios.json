@@ -1,8 +1,1 @@
-[
-    {
-        "nome": "Admin",
-        "email": "adm@mail.com",
-        "senha": "$2y$10$amqlXYbMl87m8s7qBYGOJurbmSb.LwFd81x3coKBlD8u1TS86udMi",
-        "id": 26
-    }
-]
+[{"nome":"Admin","email":"adm@mail.com","senha":"$2y$10$amqlXYbMl87m8s7qBYGOJurbmSb.LwFd81x3coKBlD8u1TS86udMi","id":26},{"nome":"pedro","email":"pedro@gmail.com","senha":"$2y$10$IjWXEBCsdWGduTCw7a89nuU8AXeqJSCGWr0mTJTsXjBa0jNkz0NZ.","id":"27"}]
