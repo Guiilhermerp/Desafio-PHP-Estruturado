@@ -116,7 +116,7 @@ if($_POST){
                     </div>
                 </div>			
                 <div class="col-6">
-                    <button type="submit" class="btn btn-primary float-right w-15 mt-2">Enviar</button>
+                    <button type="submit" class="btn btn-secondary mt-2">Enviar</button>
                 </div>
 
             </form>
